@@ -1,8 +1,8 @@
 package com.project.portfolioapp.service;
 
 import com.project.portfolioapp.entity.User;
-import com.project.portfolioapp.exception.UserAlreadyExistsException;
-import com.project.portfolioapp.exception.UserNotFoundException;
+import com.project.portfolioapp.exception.ResourceAlreadyExistsException;
+import com.project.portfolioapp.exception.ResourceNotFoundException;
 import com.project.portfolioapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,38 +15,39 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User createUser(User user) throws UserAlreadyExistsException {
+    public User createUser(User user) throws ResourceAlreadyExistsException {
         if(userRepository.findByEmail(user.getEmail()) != null) {
-            throw new UserAlreadyExistsException("User with email " + user.getEmail() + " already exists!");
-        } else {
-//            String encodedPassword = passwordEncoderConfig.passwordEncoder().encode(user.getPassword());
-//            user.setPassword(encodedPassword);
-            return userRepository.save(user);
+            throw new ResourceAlreadyExistsException("User with email " + user.getEmail() + " already exists!");
         }
+
+//      String encodedPassword = passwordEncoderConfig.passwordEncoder().encode(user.getPassword());
+//      user.setPassword(encodedPassword);
+
+        return userRepository.save(user);
     }
 
-    public User getUser(Long id) throws UserNotFoundException {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with" + id + " not found"));
+    public User getUser(Long id) throws ResourceNotFoundException {
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User with" + id + " not found!"));
     }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public User updateUser(User user) throws UserNotFoundException {
+    public User updateUser(User user) throws ResourceNotFoundException {
         getUser(user.getId());
         return userRepository.save(user);
     }
 
-    public void deleteUser(Long id) throws UserNotFoundException {
+    public void deleteUser(Long id) throws ResourceNotFoundException {
         getUser(id);
         userRepository.deleteById(id);
     }
 
-    public User getUserByEmail(String email) throws UserNotFoundException {
+    public User getUserByEmail(String email) throws ResourceNotFoundException {
         User user = userRepository.findByEmail(email);
         if(user == null) {
-            throw new UserNotFoundException("User with email " + user.getEmail() + " already exists!");
+            throw new ResourceNotFoundException("User with email " + user.getEmail() + " already exists!");
         }
         return user;
     }

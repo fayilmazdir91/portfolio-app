@@ -1,9 +1,6 @@
 package com.project.portfolioapp.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -18,9 +15,12 @@ public class Technology extends BaseEntity {
     @Size(min = 2, max = 50)
     private String name;
 
-    @Column(nullable = false)
     @Size(min = 2, max = 200)
     private String description;
+
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
 
     private String url;
 

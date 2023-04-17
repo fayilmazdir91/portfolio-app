@@ -2,8 +2,8 @@ package com.project.portfolioapp;
 
 import com.project.portfolioapp.controller.UserController;
 import com.project.portfolioapp.entity.User;
-import com.project.portfolioapp.exception.UserAlreadyExistsException;
-import com.project.portfolioapp.exception.UserNotFoundException;
+import com.project.portfolioapp.exception.ResourceAlreadyExistsException;
+import com.project.portfolioapp.exception.ResourceNotFoundException;
 import com.project.portfolioapp.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,7 +45,7 @@ public class UserControllerTest {
     @Test
     public void createUser_UserAlreadyExists_ReturnsConflict() {
         User user = new User("john.doe@example.com", "password", "John", "Doe", "Software Engineer", "Hi");
-        when(userService.createUser(user)).thenThrow(UserAlreadyExistsException.class);
+        when(userService.createUser(user)).thenThrow(ResourceAlreadyExistsException.class);
 
         ResponseEntity<User> response = userController.createUser(user);
 
@@ -69,7 +69,7 @@ public class UserControllerTest {
     @Test
     public void getUser_InvalidId_ReturnsNotFound() {
         Long id = 1L;
-        when(userService.getUser(id)).thenThrow(UserNotFoundException.class);
+        when(userService.getUser(id)).thenThrow(ResourceNotFoundException.class);
 
         ResponseEntity<User> response = userController.getUser(id);
 
@@ -110,7 +110,7 @@ public class UserControllerTest {
         Long id = 1L;
         User user = new User("john.doe@example.com", "password", "John", "Doe", "Software Engineer", "Hi");
         user.setId(id);
-        when(userService.updateUser(user)).thenThrow(UserNotFoundException.class);
+        when(userService.updateUser(user)).thenThrow(ResourceNotFoundException.class);
 
         ResponseEntity<User> response = userController.updateUser(id, user);
 
@@ -132,7 +132,7 @@ public class UserControllerTest {
     @Test
     public void deleteUser_InvalidId_ReturnsNotFound() {
         Long id = 1L;
-        doThrow(UserNotFoundException.class).when(userService).deleteUser(id);
+        doThrow(ResourceNotFoundException.class).when(userService).deleteUser(id);
 
         ResponseEntity<Void> response = userController.deleteUser(id);
 
@@ -156,7 +156,7 @@ public class UserControllerTest {
     @Test
     public void getUserByEmail_InvalidEmail_ReturnsNotFound() {
         String email = "john.doe@example.com";
-        when(userService.getUserByEmail(email)).thenThrow(UserNotFoundException.class);
+        when(userService.getUserByEmail(email)).thenThrow(ResourceNotFoundException.class);
 
         ResponseEntity<User> response = userController.getUserByEmail(email);
 

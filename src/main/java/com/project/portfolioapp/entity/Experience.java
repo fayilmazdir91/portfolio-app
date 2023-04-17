@@ -2,6 +2,7 @@ package com.project.portfolioapp.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -25,4 +26,8 @@ public class Experience extends BaseEntity {
 
     @Column(name = "end_date")
     private LocalDate endDate;
+
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
 }

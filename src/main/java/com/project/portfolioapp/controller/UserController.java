@@ -1,8 +1,8 @@
 package com.project.portfolioapp.controller;
 
 import com.project.portfolioapp.entity.User;
-import com.project.portfolioapp.exception.UserAlreadyExistsException;
-import com.project.portfolioapp.exception.UserNotFoundException;
+import com.project.portfolioapp.exception.ResourceAlreadyExistsException;
+import com.project.portfolioapp.exception.ResourceNotFoundException;
 import com.project.portfolioapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class UserController {
         try {
             User savedUser = userService.createUser(user);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
-        } catch (UserAlreadyExistsException e) {
+        } catch (ResourceAlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
@@ -33,7 +33,7 @@ public class UserController {
         try {
             User user = userService.getUser(id);
             return ResponseEntity.ok(user);
-        } catch (UserNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -50,7 +50,7 @@ public class UserController {
         try {
             User updatedUser = userService.updateUser(user);
             return ResponseEntity.ok(updatedUser);
-        } catch (UserNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -60,7 +60,7 @@ public class UserController {
         try {
             userService.deleteUser(id);
             return ResponseEntity.noContent().build();
-        } catch (UserNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -70,7 +70,7 @@ public class UserController {
         try {
             User user = userService.getUserByEmail(email);
             return ResponseEntity.ok(user);
-        } catch (UserNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }

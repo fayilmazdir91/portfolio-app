@@ -30,6 +30,10 @@ public class Project extends BaseEntity {
     @Size(min = 2, max = 200)
     private String url;
 
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
+
     @ManyToMany
     @JoinTable(
             name = "project_technologies",

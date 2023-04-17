@@ -52,6 +52,10 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private String about;
 
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
+
     @OneToMany
     @JsonIgnore
     private List<Skill> skills;

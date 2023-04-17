@@ -2,6 +2,7 @@ package com.project.portfolioapp.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -18,4 +19,8 @@ public class Language extends BaseEntity {
     @Column(nullable = false)
     @Size(min = 2, max = 200)
     private String proficiency;
+
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
 }

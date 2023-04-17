@@ -2,6 +2,7 @@ package com.project.portfolioapp.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -23,4 +24,10 @@ public class Certification extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private LocalDate certificationDate;
+
+    private String url;
+
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
 }
